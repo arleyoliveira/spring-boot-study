@@ -39,7 +39,7 @@ public class VendasApplication {
 
 
             System.out.println("Obtendo cliente pelo o nome Arley");
-            List<Cliente> clientes = clienteRepository.findByNomeContaining("ar");
+            List<Cliente> clientes = clienteRepository.encontrarPorNome("Ar");
             clientes.forEach(System.out::println);
 
         };

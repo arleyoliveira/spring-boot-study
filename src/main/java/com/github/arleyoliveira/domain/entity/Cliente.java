@@ -1,6 +1,7 @@
 package com.github.arleyoliveira.domain.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "clientes")
@@ -11,6 +12,9 @@ public class Cliente {
 
     @Column(length = 100)
     private String nome;
+
+    @OneToMany(mappedBy = "cliente")
+    private Set<Pedido> pedidos;
 
     public Integer getId() {
         return id;
@@ -45,5 +49,9 @@ public class Cliente {
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 '}';
+    }
+
+    public Set<Pedido> getPedidos() {
+        return pedidos;
     }
 }
