@@ -14,7 +14,7 @@ import java.util.List;
 
 @SpringBootApplication
 @RestController
-public class VendasApplication {
+public class SalesApplication {
 
 
     @GetMapping("/hello")
@@ -46,6 +46,6 @@ public class VendasApplication {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(VendasApplication.class, args);
+        SpringApplication.run(SalesApplication.class, args);
     }
 }
