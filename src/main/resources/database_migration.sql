@@ -1,27 +1,27 @@
-CREATE TABLE clientes (
+CREATE TABLE customers (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(100)
+    name VARCHAR(100)
 );
 
-CREATE TABLE produtos (
+CREATE TABLE products (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    descricao VARCHAR(100),
-    valor NUMERIC(20,2)
+    description VARCHAR(100),
+    `value` NUMERIC(20,2)
 );
 
-CREATE TABLE pedidos (
+CREATE TABLE sales (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    cliente_id INTEGER REFERENCES clientes (id),
-    data_pedido TIMESTAMP,
+    customer_id INTEGER REFERENCES customers (id),
+    created TIMESTAMP,
     total NUMERIC(20,2)
 );
 
 
-CREATE TABLE itens (
+CREATE TABLE items (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    produto_id INTEGER REFERENCES produtos (id),
-    pedido_id INTEGER REFERENCES pedidos (id),
-    quantidade INTEGER,
-    valor_unitario NUMERIC(20,2),
+    product_id INTEGER REFERENCES products (id),
+    sale_id INTEGER REFERENCES sales (id),
+    amount INTEGER,
+    unitary_value NUMERIC(20,2),
     total NUMERIC(20,2)
 );

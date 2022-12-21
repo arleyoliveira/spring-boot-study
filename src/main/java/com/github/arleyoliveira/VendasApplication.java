@@ -1,7 +1,7 @@
 package com.github.arleyoliveira;
 
-import com.github.arleyoliveira.domain.entity.Cliente;
-import com.github.arleyoliveira.domain.repositorio.ClienteRepository;
+import com.github.arleyoliveira.domain.entities.Customer;
+import com.github.arleyoliveira.domain.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -23,23 +23,23 @@ public class VendasApplication {
     }
 
     @Bean
-    public CommandLineRunner init(@Autowired ClienteRepository clienteRepository) {
+    public CommandLineRunner init(@Autowired CustomerRepository clienteRepository) {
         return args -> {
             System.out.println("Salvando clientes");
-            clienteRepository.save(new Cliente("Arley"));
-            clienteRepository.save(new Cliente("Guilherme"));
-            clienteRepository.save(new Cliente("Warley"));
+            clienteRepository.save(new Customer("Arley"));
+            clienteRepository.save(new Customer("Guilherme"));
+            clienteRepository.save(new Customer("Warley"));
 
 
             System.out.println("Obtendo cliente pelo o nome Gui");
-            boolean exist = clienteRepository.existsByNome("Guilherme");
+            boolean exist = clienteRepository.existsByName("Guilherme");
 
 
             System.out.println("Existe um cliente com o nome Guilherme: " + exist);
 
 
             System.out.println("Obtendo cliente pelo o nome Arley");
-            List<Cliente> clientes = clienteRepository.encontrarPorNome("Ar");
+            List<Customer> clientes = clienteRepository.findBySimilarName("Ar");
             clientes.forEach(System.out::println);
 
         };
