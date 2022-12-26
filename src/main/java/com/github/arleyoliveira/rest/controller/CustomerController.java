@@ -28,7 +28,7 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.OK)
     public Customer getById(@PathVariable Integer id) {
         return customerRepository.findById(id).map(customer -> customer)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));
+                .orElseThrow(this::notFound);
     }
 
     @GetMapping
@@ -59,7 +59,7 @@ public class CustomerController {
                     customerRepository.save(customer);
                     return ResponseEntity.noContent().build();
                 })
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));
+                .orElseThrow(this::notFound);
     }
 
     @DeleteMapping(value = "/{id}")
@@ -71,6 +71,10 @@ public class CustomerController {
                     customerRepository.delete(customerOriginal);
                     return ResponseEntity.noContent().build();
                 })
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found"));
+                .orElseThrow(this::notFound);
+    }
+
+    public ResponseStatusException notFound() {
+        return new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found");
     }
 }
