@@ -1,8 +1,8 @@
 package com.github.arleyoliveira.rest.controller;
 
 import com.github.arleyoliveira.domain.entities.Customer;
-import com.github.arleyoliveira.domain.repositories.CustomerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.github.arleyoliveira.domain.entities.Product;
+import com.github.arleyoliveira.domain.repositories.ProductRepository;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
@@ -14,49 +14,49 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @Controller
-@RequestMapping("/api/customers")
+@RequestMapping("/api/products")
 @ResponseBody
-public class CustomerController {
+public class ProductController {
 
-    private final CustomerRepository customerRepository;
+    private final ProductRepository productRepository;
 
-    public CustomerController(@Autowired CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
+    public ProductController(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
     @GetMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Customer getById(@PathVariable Integer id) {
-        return customerRepository.findById(id).map(customer -> customer)
+    public Product getById(@PathVariable Integer id) {
+        return productRepository.findById(id).map(product -> product)
                 .orElseThrow(this::notFound);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Customer> find(Customer filter) {
+    public List<Product> find(Product filter) {
         ExampleMatcher matcher = ExampleMatcher
                 .matching()
                 .withIgnoreCase()
                 .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-        Example<Customer> example = Example.of(filter, matcher);
-        return customerRepository.findAll(example);
+        Example<Product> example = Example.of(filter, matcher);
+        return productRepository.findAll(example);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Object> save(@RequestBody Customer customer) {
-        customerRepository.save(customer);
-        return ResponseEntity.ok(customer);
+    public ResponseEntity<Object> save(@RequestBody Product product) {
+        productRepository.save(product);
+        return ResponseEntity.ok(product);
     }
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable Integer id, @RequestBody Customer customer) {
-        customerRepository
+    public void update(@PathVariable Integer id, @RequestBody Product product) {
+        productRepository
                 .findById(id)
-                .map(customerOriginal -> {
-                    customer.setId(customerOriginal.getId());
-                    customerRepository.save(customer);
+                .map(productOriginal -> {
+                    product.setId(productOriginal.getId());
+                    productRepository.save(product);
                     return ResponseEntity.noContent().build();
                 })
                 .orElseThrow(this::notFound);
@@ -65,16 +65,16 @@ public class CustomerController {
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id) {
-        customerRepository
+        productRepository
                 .findById(id)
                 .map(customerOriginal -> {
-                    customerRepository.delete(customerOriginal);
+                    productRepository.delete(customerOriginal);
                     return ResponseEntity.noContent().build();
                 })
                 .orElseThrow(this::notFound);
     }
 
     public ResponseStatusException notFound() {
-        return new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer not found");
+        return new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found");
     }
 }
