@@ -13,7 +13,7 @@ public class Product {
     @Column(length = 100)
     private String description;
 
-    @Column(length = 20, precision = 2)
+    @Column(precision = 20, scale = 2)
     private BigDecimal value;
 
     public Integer getId() {

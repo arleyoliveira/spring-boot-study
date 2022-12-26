@@ -21,10 +21,10 @@ public class Item {
     @Column
     private Integer amount;
 
-    @Column(name = "unitary_value", length = 20, precision = 2)
+    @Column(name = "unitary_value", precision = 20, scale = 2)
     private BigDecimal unitaryValue;
 
-    @Column(length = 20, precision = 2)
+    @Column(precision = 20, scale = 2)
     private BigDecimal total;
 
     public Integer getId() {

@@ -19,7 +19,7 @@ public class Sale {
     @Column(name = "created")
     private LocalDate created;
 
-    @Column(length = 20, precision = 2)
+    @Column(precision = 20, scale = 2)
     private BigDecimal total;
 
     @OneToMany(mappedBy = "sale")
@@ -59,5 +59,14 @@ public class Sale {
 
     public Set<Item> getItems() {
         return items;
+    }
+
+    @Override
+    public String toString() {
+        return "Sale{" +
+                "id=" + id +
+                ", created=" + created +
+                ", total=" + total +
+                '}';
     }
 }
