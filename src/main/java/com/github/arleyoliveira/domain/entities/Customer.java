@@ -15,6 +15,9 @@ public class Customer {
     @Column(length = 100)
     private String name;
 
+    @Column(length = 11)
+    private String cpf;
+
     @JsonIgnore
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private Set<Sale> sales;
@@ -56,5 +59,13 @@ public class Customer {
 
     public Set<Sale> getSales() {
         return sales;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 }
