@@ -36,7 +36,7 @@ public class SalesApplication {
             Customer customer = new Customer("Arley");
             customerRepository.save(customer);
 
-            Sale sale = new Sale();
+            /*Sale sale = new Sale();
             sale.setCustomer(customer);
             sale.setCreated(LocalDate.now());
             sale.setTotal(BigDecimal.valueOf(100.00));
@@ -49,7 +49,7 @@ public class SalesApplication {
             System.out.println(customer);
             System.out.println(customer.getSales());
 
-            saleRepository.findByCustomer(customer).forEach(System.out::println);
+            saleRepository.findByCustomer(customer).forEach(System.out::println);*/
         };
     }
 
