@@ -28,7 +28,29 @@ public class CustomerController {
         if (!customer.isPresent()) {
             return ResponseEntity.notFound().build();
         }
+
         return ResponseEntity.ok(customer.get());
     }
 
+    @PostMapping
+    @ResponseBody
+    public ResponseEntity<Object> save(@RequestBody Customer customer) {
+        customerRepository.save(customer);
+        return ResponseEntity.ok(customer);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    @ResponseBody
+    public ResponseEntity<Object> delete (@PathVariable Integer id) {
+
+        Optional<Customer> customer = customerRepository.findById(id);
+
+        if (!customer.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        customerRepository.delete(customer.get());
+
+        return ResponseEntity.noContent().build();
+    }
 }
