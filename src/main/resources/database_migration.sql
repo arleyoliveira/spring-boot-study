@@ -1,6 +1,7 @@
 CREATE TABLE customers (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100)
+    name VARCHAR(100),
+    cpf varchar(11)
 );
 
 CREATE TABLE products (
@@ -13,7 +14,8 @@ CREATE TABLE sales (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     customer_id INTEGER REFERENCES customers (id),
     created TIMESTAMP,
-    total NUMERIC(20,2)
+    total NUMERIC(20,2),
+    status varchar(20)
 );
 
 

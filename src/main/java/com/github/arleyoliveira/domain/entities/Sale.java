@@ -1,5 +1,7 @@
 package com.github.arleyoliveira.domain.entities;
 
+import com.github.arleyoliveira.domain.enums.SaleStatus;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -24,6 +26,9 @@ public class Sale {
 
     @OneToMany(mappedBy = "sale")
     private Set<Item> items;
+
+    @Enumerated(EnumType.STRING)
+    private SaleStatus status;
 
     public Integer getId() {
         return id;
@@ -63,6 +68,14 @@ public class Sale {
 
     public void setItems(Set<Item> items) {
         this.items = items;
+    }
+
+    public SaleStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(SaleStatus status) {
+        this.status = status;
     }
 
     @Override

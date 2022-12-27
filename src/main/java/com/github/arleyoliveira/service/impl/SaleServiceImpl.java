@@ -4,23 +4,25 @@ import com.github.arleyoliveira.domain.entities.Customer;
 import com.github.arleyoliveira.domain.entities.Item;
 import com.github.arleyoliveira.domain.entities.Product;
 import com.github.arleyoliveira.domain.entities.Sale;
+import com.github.arleyoliveira.domain.enums.SaleStatus;
 import com.github.arleyoliveira.domain.repositories.CustomerRepository;
 import com.github.arleyoliveira.domain.repositories.ItemRepository;
 import com.github.arleyoliveira.domain.repositories.ProductRepository;
 import com.github.arleyoliveira.domain.repositories.SaleRepository;
 import com.github.arleyoliveira.exception.ClientNotFoundException;
 import com.github.arleyoliveira.exception.ProductNotFoundException;
+import com.github.arleyoliveira.exception.SaleNotFoundException;
 import com.github.arleyoliveira.exception.SaleWithoutItemException;
-import com.github.arleyoliveira.rest.dto.ItemDTO;
-import com.github.arleyoliveira.rest.dto.SaleDTO;
+import com.github.arleyoliveira.rest.dto.ItemRequestDTO;
+import com.github.arleyoliveira.rest.dto.SaleRequestDTO;
 import com.github.arleyoliveira.service.SaleService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -36,7 +38,7 @@ public class SaleServiceImpl implements SaleService {
 
     @Override
     @Transactional
-    public Sale save(SaleDTO dto) {
+    public Sale save(SaleRequestDTO dto) {
 
         Customer customer = customerRepository
                 .findById(dto.getCustomer())
@@ -46,6 +48,7 @@ public class SaleServiceImpl implements SaleService {
         sale.setTotal(dto.getTotal());
         sale.setCreated(LocalDate.now());
         sale.setCustomer(customer);
+        sale.setStatus(SaleStatus.CONFIRMED);
 
         Set<Item> items = convertItems(sale, dto.getItems());
 
@@ -58,7 +61,24 @@ public class SaleServiceImpl implements SaleService {
         return sale;
     }
 
-    private Set<Item> convertItems(Sale sale, List<ItemDTO> itemsDto) {
+    @Override
+    public Optional<Sale> getById(Integer id) {
+        return saleRepository.findByIdFetchItems(id);
+    }
+
+    @Override
+    @Transactional
+    public void updateStatus(Integer id, SaleStatus newStatus) {
+        saleRepository
+                .findById(id)
+                .map(sale -> {
+                    sale.setStatus(newStatus);
+                    return saleRepository.save(sale);
+                })
+                .orElseThrow(() -> new SaleNotFoundException("Sale not found!"));
+    }
+
+    private Set<Item> convertItems(Sale sale, List<ItemRequestDTO> itemsDto) {
         if (itemsDto.isEmpty()) {
             throw new SaleWithoutItemException("Sale without item!");
         }
