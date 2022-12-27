@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 
+import javax.validation.Valid;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
@@ -22,7 +23,6 @@ import java.util.stream.Collectors;
 
 @RestController()
 @RequestMapping("api/sales")
-@ResponseBody
 public class SaleController {
 
     private SaleService saleService;
@@ -33,7 +33,7 @@ public class SaleController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Sale save(@RequestBody SaleRequestDTO dto) {
+    public Sale save(@RequestBody @Valid SaleRequestDTO dto) {
         return saleService.save(dto);
     }
 
