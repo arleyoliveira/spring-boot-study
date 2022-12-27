@@ -1,10 +1,16 @@
 package com.github.arleyoliveira.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Set;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "customers")
 public class Customer {
@@ -22,31 +28,8 @@ public class Customer {
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private Set<Sale> sales;
 
-    public Customer() {}
-
     public Customer(String nome) {
         this.name = nome;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public Customer(Integer id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override
@@ -55,17 +38,5 @@ public class Customer {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
-    }
-
-    public Set<Sale> getSales() {
-        return sales;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
     }
 }

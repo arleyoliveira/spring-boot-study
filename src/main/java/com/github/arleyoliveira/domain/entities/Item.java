@@ -1,5 +1,7 @@
 package com.github.arleyoliveira.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -10,6 +12,7 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "sale_id")
     private Sale sale;
@@ -49,6 +52,7 @@ public class Item {
 
     public void setProduct(Product product) {
         this.product = product;
+        this.unitaryValue = product.getValue();
     }
 
     public Integer getAmount() {
@@ -73,5 +77,9 @@ public class Item {
 
     public void setTotal(BigDecimal total) {
         this.total = total;
+    }
+
+    public void calculateTotal() {
+        total = BigDecimal.valueOf(amount * unitaryValue.doubleValue());
     }
 }
