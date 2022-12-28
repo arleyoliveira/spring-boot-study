@@ -2,6 +2,7 @@ package com.github.arleyoliveira.rest.controller;
 
 import com.github.arleyoliveira.domain.entities.Customer;
 import com.github.arleyoliveira.domain.repositories.CustomerRepository;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -16,6 +17,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/api/customers")
 @ResponseBody
+@Api(tags = "Customers")
 public class CustomerController {
 
     private final CustomerRepository customerRepository;

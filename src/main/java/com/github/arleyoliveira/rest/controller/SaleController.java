@@ -9,6 +9,7 @@ import com.github.arleyoliveira.rest.dto.SaleRequestDTO;
 import com.github.arleyoliveira.rest.dto.SaleResponseDTO;
 import com.github.arleyoliveira.rest.dto.UpdateSaleStatusDTO;
 import com.github.arleyoliveira.service.SaleService;
+import io.swagger.annotations.Api;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 
 @RestController()
 @RequestMapping("api/sales")
+@Api(tags = "Sales")
 public class SaleController {
 
     private SaleService saleService;
